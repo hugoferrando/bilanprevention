@@ -112,6 +112,54 @@ td.st{font-weight:700;color:var(--g);white-space:nowrap}
 .mbar{display:none}
 @media(max-width:959px){.mbar{display:flex;position:sticky;bottom:0;z-index:6;justify-content:space-between;align-items:center;gap:10px;padding:10px max(5vw,16px);background:var(--band);color:#fff;font-weight:700}.mbar a{color:#fff;white-space:nowrap}}
 @media(max-width:600px){.tabs{grid-template-columns:repeat(2,minmax(0,1fr))}.tab{border-radius:12px}.tabs{padding-bottom:16px}.tab[aria-selected=true]{background:#fff;color:#10201a}table{font-size:14px}.stack thead{display:none}.stack tr{display:grid;padding-block:8px;border-bottom:1px solid var(--line)}.stack td{border:0;padding:2px 0}td.st{padding-top:10px}}
+.txt{font:inherit;font-size:16px;width:100%;height:46px;padding:0 12px;border:1.5px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink)}
+.txt:focus{outline:3px solid color-mix(in srgb,var(--g) 50%,transparent);border-color:var(--g)}
+.btn.big{min-height:52px;padding:0 26px;font-size:17px}
+.ov{position:fixed;inset:0;z-index:50;background:color-mix(in srgb,#000 55%,transparent);overflow:auto;padding:0 12px 40px}
+.ov[hidden]{display:none}
+.ovbar{position:sticky;top:0;display:flex;flex-wrap:wrap;gap:10px;align-items:center;max-width:860px;margin:0 auto;padding:12px 0;background:transparent}
+.ovbar .btn.ghost{background:var(--bg)}
+#rClose{margin-left:auto}
+#rMsg{color:#fff;font-weight:700;font-size:14px}
+.doc{max-width:860px;margin:0 auto;background:#fff;color:#14201b;border-radius:6px;padding:clamp(20px,5vw,56px);box-shadow:0 10px 40px rgba(0,0,0,.25);font-size:15px;line-height:1.5}
+.doc h2{font-size:32px;font-weight:800;color:#14201b}
+.doc h3{font-size:19px;font-weight:800;margin:28px 0 10px;padding-bottom:6px;border-bottom:2px solid #00845a;color:#14201b}
+.doc h4{font:700 15px "Atkinson Hyperlegible",sans-serif;margin:16px 0 6px;color:#00845a}
+.dh{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px 32px;align-items:flex-start;padding-bottom:16px;border-bottom:4px solid #00845a}
+.dh p{margin:0 0 4px;color:#4b5e55}
+.dh dl{display:grid;grid-template-columns:auto auto;gap:2px 14px;margin:0;font-size:14px}
+.dh dt{color:#4b5e55}
+.dh dd{margin:0;font-weight:700}
+.kp{display:grid;grid-template-columns:repeat(auto-fit,minmax(9em,1fr));gap:10px;margin-top:18px}
+.kp div{border:1px solid #d3e1d9;border-radius:8px;padding:10px 12px}
+.kp b{display:block;font:800 26px Figtree,sans-serif;line-height:1.1;font-variant-numeric:tabular-nums}
+.kp span{font-size:13px;color:#4b5e55}
+.dfl{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+.dfl li{border-left:4px solid #00845a;padding:2px 0 2px 12px;break-inside:avoid}
+.dfl li.a{border-color:#c42d2b}.dfl li.v{border-color:#b86e00}
+.dfl small{font-weight:700;font-size:12px;color:#4b5e55}
+.dfl li.a small{color:#c42d2b}.dfl li.v small{color:#9a5a00}
+.dfl p{margin:2px 0 0;color:#33443c;font-size:14px}
+.doc table{font-size:14px;margin-bottom:6px}
+.doc td{border-color:#e1ebe5;padding:6px 8px}
+.doc td:first-child{width:58%;color:#33443c}
+.doc td:last-child{font-weight:700}
+.doc td.nr{color:#8a9a92;font-weight:400}
+.doc tr{break-inside:avoid}
+.doc .free{white-space:pre-wrap;margin:0;min-height:1.5em}
+.doc .muted{color:#8a9a92}
+.sig{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px;margin-top:32px;break-inside:avoid}
+.sig div{border-top:1px solid #14201b;padding-top:6px;font-size:13px;color:#4b5e55;min-height:70px}
+.dfoot{margin-top:24px;font-size:12px;color:#6b7c74}
+@media print{
+ @page{size:A4;margin:14mm}
+ body{background:#fff}
+ body>*:not(#report){display:none!important}
+ .ov{position:static;background:none;padding:0;overflow:visible}
+ .noprint{display:none!important}
+ .doc{box-shadow:none;border-radius:0;padding:0;max-width:none}
+ .doc h3{break-after:avoid}
+}
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
@@ -140,11 +188,16 @@ td.st{font-weight:700;color:var(--g);white-space:nowrap}
    <h2>Synthèse et plan personnalisé</h2>
    <p class="meta" style="margin-top:0">À reporter dans le Plan Personnalisé de Prévention remis au patient.</p>
    <div class="two">
+    <div><label for="pat">Patient (nom ou initiales, facultatif)</label><input class="txt" id="pat" type="text" autocomplete="off" placeholder="Ex. : M. D."></div>
+    <div><label for="pha">Pharmacien</label><input class="txt" id="pha" type="text" autocomplete="off" placeholder="Nom du pharmacien"></div>
+   </div>
+   <div class="two">
     <div><label for="obj">Objectifs retenus avec le patient</label><textarea id="obj" placeholder="Ex. : marcher 30 min 5 jours par semaine, réduire à 1 verre par jour…"></textarea></div>
     <div><label for="ori">Orientations et notes du pharmacien</label><textarea id="ori" placeholder="Ex. : kit colorectal remis, RDV médecin traitant pour bilan tensionnel…"></textarea></div>
    </div>
    <div class="btns">
-    <button class="btn" id="copy" type="button">Copier la synthèse</button>
+    <button class="btn big" id="gen" type="button">Générer le bilan</button>
+    <button class="btn ghost" id="copy" type="button">Copier la synthèse</button>
     <button class="btn ghost" id="reset" type="button">Nouveau patient</button>
     <span id="confirm" hidden>Effacer toutes les réponses ? <button class="btn danger" id="yes" type="button">Effacer</button> <button class="btn ghost" id="no" type="button">Annuler</button></span>
     <span id="msg" aria-live="polite"></span>
@@ -160,6 +213,15 @@ td.st{font-weight:700;color:var(--g);white-space:nowrap}
   <div class="card"><h3>Repérage anxiété / dépression</h3><div class="sc" id="scores"></div><p class="meta">GAD-2 et PHQ-2 sur les 2 dernières semaines. Positif à partir de 3/6.</p></div>
   <div class="card rep" id="reperes"></div>
  </aside>
+</div>
+<div class="ov" id="report" hidden role="dialog" aria-modal="true" aria-labelledby="rT">
+ <div class="ovbar noprint">
+  <button class="btn" id="rPrint" type="button">Imprimer ou enregistrer en PDF</button>
+  <button class="btn ghost" id="rCopy" type="button">Copier le texte</button>
+  <span id="rMsg" aria-live="polite"></span>
+  <button class="btn ghost" id="rClose" type="button">Fermer</button>
+ </div>
+ <article class="doc" id="doc"></article>
 </div>
 <div class="mbar"><span id="mText">Aucun point relevé</span><a href="#rep">Voir le repérage</a></div>
 <footer class="foot">
@@ -282,7 +344,7 @@ const R={
  '70-75':{v:['Rappel diphtérie-tétanos-polio à 75 ans','Grippe et Covid-19 chaque automne','Pneumocoque : 1 dose (VPC20 ou VPC21) si non faite','Zona : Shingrix, 2 doses','VRS : recommandé dès 75 ans, dès 65 ans si facteurs de risque'],d:['Cancers colorectal et du sein : tous les 2 ans jusqu’à 74 ans','Dénutrition : IMC < 22 ou perte de poids','Chutes, autonomie (ICOPE), mémoire','Revue des traitements : bilan partagé de médication si polymédication']}
 };
 
-const blank=()=>({g:'45-50',dob:'',A:{'18-25':{},'45-50':{},'60-65':{},'70-75':{}},obj:'',ori:''});
+const blank=()=>({g:'45-50',dob:'',A:{'18-25':{},'45-50':{},'60-65':{},'70-75':{}},obj:'',ori:'',pat:'',pha:''});
 let state=blank();
 const $=id=>document.getElementById(id);
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -431,6 +493,8 @@ function update(){
 function text(){
  const g=grp(),a=ans(),ag=age(),b=bmi(a),F=flags(g,a,ag),L=[];
  L.push(`BILAN PRÉVENTION ${g.min}-${g.max} ANS - ${new Date().toLocaleDateString('fr-FR')}`);
+ if(state.pat.trim())L.push(`Patient : ${state.pat.trim()}`);
+ if(state.pha.trim())L.push(`Pharmacien : ${state.pha.trim()}`);
  if(ag!=null)L.push(`Âge : ${ag} ans`);if(b)L.push(`IMC : ${b.toFixed(1).replace('.',',')}`);
  const P=[a.int,a.tri].map(S4).filter(x=>x>=0),A=[a.anx,a.inq].map(S4).filter(x=>x>=0);
  if(A.length)L.push(`GAD-2 : ${A.reduce((s,x)=>s+x,0)}/6`);if(P.length)L.push(`PHQ-2 : ${P.reduce((s,x)=>s+x,0)}/6`);
@@ -443,6 +507,41 @@ function text(){
  allQ(g).forEach(q=>{if(q.c&&!q.c(a))return;const v=a[q.k];if(v==null||v===''||(Array.isArray(v)&&!v.length))return;L.push(`- ${q.t} ${Array.isArray(v)?v.join(' ; '):v+(q.u?' '+q.u:'')}`)});
  return L.join('\n');
 }
+
+const filled=v=>v!=null&&v!==''&&!(Array.isArray(v)&&!v.length);
+function buildReport(){
+ const g=grp(),a=ans(),ag=age(),b=bmi(a),F=flags(g,a,ag),lo=g.id==='70-75'?22:18.5;
+ const P=[a.int,a.tri].map(S4).filter(x=>x>=0),A=[a.anx,a.inq].map(S4).filter(x=>x>=0);
+ const sP=P.reduce((s,x)=>s+x,0),sA=A.reduce((s,x)=>s+x,0),n={a:0,v:0,c:0};F.forEach(f=>n[f.lv]++);
+ const today=new Date().toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'});
+ const dob=state.dob?new Date(state.dob).toLocaleDateString('fr-FR'):'';
+ const meta=[['Date du bilan',today],['Patient',state.pat.trim()],['Date de naissance',dob],['Âge',ag!=null?ag+' ans':''],['Sexe',a.sexe||''],['Pharmacien',state.pha.trim()]].filter(m=>m[1]);
+ const bc=b?(b<lo?(g.id==='70-75'?'Sous 22 : dénutrition':'Maigreur'):b<25?'Corpulence normale':b<30?'Surpoids':'Obésité'):'Non renseigné';
+ const lab={a:'Alerte',v:'Vigilance',c:'Conseil'};
+ const prio=a.prio||[];
+ const secs=g.S.map(s=>{const rows=s[1].filter(q=>!q.c||q.c(a)).map(q=>{const v=a[q.k];const ok=filled(v);const t=ok?(Array.isArray(v)?v.join(' ; '):v+(q.u?' '+q.u:'')):'Non renseigné';return `<tr><td>${q.t}</td><td class="${ok?'':'nr'}">${esc(t)}</td></tr>`}).join('');return rows?`<h4>${s[0]}</h4><table>${rows}</table>`:''}).join('');
+ $('doc').innerHTML=`
+ <header class="dh"><div><p>Mon Bilan Prévention · ${g.min}–${g.max} ans</p><h2 id="rT">Bilan de prévention</h2></div>
+ <dl>${meta.map(m=>`<dt>${m[0]}</dt><dd>${esc(m[1])}</dd>`).join('')}</dl></header>
+ <div class="kp">
+  <div><b>${b?b.toFixed(1).replace('.',','):'—'}</b><span>IMC · ${bc}</span></div>
+  <div><b>${A.length?sA+' / 6':'—'}</b><span>GAD-2 anxiété${sA>=3?' · positif':''}</span></div>
+  <div><b>${P.length?sP+' / 6':'—'}</b><span>PHQ-2 dépression${sP>=3?' · positif':''}</span></div>
+  <div><b>${F.length}</b><span>${n.a} alerte${n.a>1?'s':''} · ${n.v} vigilance · ${n.c} conseil${n.c>1?'s':''}</span></div>
+ </div>
+ <h3>Points relevés et conduite à tenir</h3>
+ ${F.length?`<ul class="dfl">${F.map(f=>`<li class="${f.lv}"><small>${lab[f.lv]} · ${f.th}</small><div><strong>${esc(f.t)}</strong></div><p>${f.ac}</p></li>`).join('')}</ul>`:'<p class="muted">Aucun point relevé.</p>'}
+ <h3>Priorités exprimées par le patient</h3>
+ ${prio.length?`<ul>${prio.map(p=>`<li>${esc(p)}</li>`).join('')}</ul>`:'<p class="muted">Non renseignées.</p>'}
+ <h3>Objectifs retenus avec le patient</h3><p class="free">${esc(state.obj.trim())||'<span class="muted">À compléter.</span>'}</p>
+ <h3>Orientations et notes du pharmacien</h3><p class="free">${esc(state.ori.trim())||'<span class="muted">À compléter.</span>'}</p>
+ <h3>Réponses au questionnaire</h3>${secs}
+ <div class="sig"><div>Signature du pharmacien</div><div>Signature du patient</div></div>
+ <p class="dfoot">Questions issues de l’auto-questionnaire officiel « Mon Bilan Prévention » ${g.min}–${g.max} ans. Document d’aide à l’entretien : il ne remplace pas le Plan Personnalisé de Prévention officiel ni l’avis médical.</p>`;
+}
+let lastFocus=null;
+function openReport(){buildReport();lastFocus=document.activeElement;$('report').hidden=false;document.body.style.overflow='hidden';$('report').scrollTop=0;$('rPrint').focus()}
+function closeReport(){$('report').hidden=true;document.body.style.overflow='';lastFocus&&lastFocus.focus()}
 
 function setGroup(id){state.g=id;renderTabs();renderForm();update()}
 
@@ -461,17 +560,24 @@ $('form').addEventListener('input',e=>{const el=e.target;if(el.dataset.n){ans()[
 $('dobIn').addEventListener('change',e=>{state.dob=e.target.value;const ag=age(),m=ag!=null&&G.find(x=>ag>=x.min&&ag<=x.max);if(m&&m.id!==state.g)setGroup(m.id);else update()});
 $('obj').addEventListener('input',e=>state.obj=e.target.value);
 $('ori').addEventListener('input',e=>state.ori=e.target.value);
+$('pat').addEventListener('input',e=>state.pat=e.target.value);
+$('pha').addEventListener('input',e=>state.pha=e.target.value);
+$('gen').addEventListener('click',openReport);
+$('rClose').addEventListener('click',closeReport);
+$('rPrint').addEventListener('click',()=>{try{window.print()}catch(err){$('rMsg').textContent='Impression bloquée ici : ouvrez la page dans le navigateur.'}});
+$('rCopy').addEventListener('click',async()=>{const t=text(),m=$('rMsg');try{await navigator.clipboard.writeText(t);m.textContent='Texte copié.'}catch(err){m.textContent='Copie refusée par le navigateur.'}setTimeout(()=>m.textContent='',3000)});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('report').hidden)closeReport()});
 $('copy').addEventListener('click',async()=>{const t=text(),msg=$('msg');try{await navigator.clipboard.writeText(t);msg.textContent='Synthèse copiée.'}catch(err){const ta=document.createElement('textarea');ta.value=t;document.body.appendChild(ta);ta.select();let ok=false;try{ok=document.execCommand('copy')}catch(x){}ta.remove();msg.textContent=ok?'Synthèse copiée.':'Copie refusée par le navigateur.'}setTimeout(()=>msg.textContent='',3000)});
 $('reset').addEventListener('click',()=>{$('confirm').hidden=false;$('reset').hidden=true});
 $('no').addEventListener('click',()=>{$('confirm').hidden=true;$('reset').hidden=false});
-$('yes').addEventListener('click',()=>{const g=state.g;state=blank();state.g=g;$('dobIn').value='';$('obj').value='';$('ori').value='';$('confirm').hidden=true;$('reset').hidden=false;setGroup(g);window.scrollTo(0,0)});
+$('yes').addEventListener('click',()=>{const g=state.g,g0pha=state.pha;state=blank();state.g=g;$('dobIn').value='';$('obj').value='';$('ori').value='';$('pat').value='';$('pha').value=g0pha;state.pha=g0pha;$('confirm').hidden=true;$('reset').hidden=false;setGroup(g);window.scrollTo(0,0)});
 
 function start(d){
  if(d&&d.A){state=Object.assign(blank(),d)}
- $('dobIn').value=state.dob||'';$('obj').value=state.obj||'';$('ori').value=state.ori||'';
+ $('dobIn').value=state.dob||'';$('obj').value=state.obj||'';$('ori').value=state.ori||'';$('pat').value=state.pat||'';$('pha').value=state.pha||'';
  setGroup(state.g);
 }
-window.claude?.hot?.snapshot?.(()=>({g:state.g,dob:state.dob,A:state.A,obj:state.obj,ori:state.ori}));
+window.claude?.hot?.snapshot?.(()=>({g:state.g,dob:state.dob,A:state.A,obj:state.obj,ori:state.ori,pat:state.pat,pha:state.pha}));
 window.claude?.hot?.ready?window.claude.hot.ready(start):start(window.claude?.hot?.data??{});
 }
 </script>
